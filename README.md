@@ -43,6 +43,8 @@ uv add --dev ruff ty pytest
 uv add logfire
 ```
 
+Get your logfire token, copy the .env.example to .env and fill in value for  LOGFIRE.
+
 ### Install Just for command invocation
 
 ```sh
@@ -76,10 +78,32 @@ Run the python code in main.py:
 just run
 ```
 
+Since the justfile starts with `set dotenv-load` , the environment variables defined in the `.env` file are loaded before
+the python program is run. The python program will also run if the LOGFIRE environment variable is not set but no logging on pydantic endpoint will be done.
+
 You should see this:
 
 ```sh
 uv run python main.py
 15:12:23.707 application.startup
 Hello from python-minimal-boilerplate!
+```
+
+## Available recipies in the just file
+
+```sh
+> just
+Available recipes:
+    run
+
+    [lifecycle]
+    clean        # Remove temporary files
+    install      # Ensure project virtualenv is up to date
+    update       # Update dependencies
+
+    [qa]
+    check *args
+    lint *args
+    test *args
+    typing *args
 ```
