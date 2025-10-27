@@ -1,7 +1,7 @@
 # python-minimal-boilerplate
 
-Modern minimal boilerplate for a Python project with developer dependencies uv, rust, ty, pytest.
-It uses just as a handy way to save and run project-specific commands.
+Modern minimal boilerplate for a Python project with developer dependencies uv, rust, ty, pytest, and mkdocs.
+It uses command runner just as a handy way to save and run project-specific commands.
 Logging is with [Pydantic Logfire](https://pydantic.dev/logfire) (but you can easily switch to loguru).
 
 ## Installation
@@ -33,7 +33,7 @@ cd new-repo-from-template
 ### Add development tools
 
 ```sh
-uv add --dev ruff ty pytest
+uv add --dev ruff ty pytest mkdocs
 ```
 
 ### Optional: Install logfire for logging
@@ -61,7 +61,9 @@ Check the code with ruff and ty from Astral by running  the command `just check`
 uv run ruff check --fix 
 All checks passed!
 uv run ty check 
-Checking ------------------------------------------------------------ 2/2 files                                                                   All checks passed!
+Checking ------------------------------------------------------------ 2/2
+files
+All checks passed!
 ```
 
 Test the code by issuing command `just test`:
@@ -90,12 +92,23 @@ uv run python main.py
 Hello from python-minimal-boilerplate!
 ```
 
+### Build documentation
+
+Generate the static site with MkDocs:
+
+```sh
+just docs
+```
+
+The rendered site is written to the `site/` directory.
+
 ## Available recipies in the just file
 
 ```sh
 > just
 Available recipes:
     run
+    docs
 
     [lifecycle]
     clean        # Remove temporary files
@@ -107,4 +120,7 @@ Available recipes:
     lint *args
     test *args
     typing *args
+
+    [docs]
+    docs *args
 ```

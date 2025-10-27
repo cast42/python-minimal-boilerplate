@@ -13,6 +13,7 @@ uv init --python 3.14
 
 - Add runtime dependencies with `uv add`, for example `uv add logfire`.
 - Add development-only tooling with the `--dev` flag, e.g. `uv add --dev ruff`.
+- Install MkDocs for documentation with `uv add --dev mkdocs`.
 
 ## Code Quality Standards
 
@@ -38,3 +39,4 @@ uv add --dev ruff ty pytest
 - Conventionally:
   - `just check` combines linting and type checking.
   - `just test` executes the test suite in the `tests` directory.
+  - `just docs` builds the MkDocs site into `site/`.

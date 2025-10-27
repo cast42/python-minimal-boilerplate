@@ -21,6 +21,10 @@ check *args:
     uv run ruff check --fix {{args}}
     uv run ty check {{args}}
 
+[group('docs')]
+docs *args:
+    uv run mkdocs build {{args}}
+
 run:
     uv run python main.py
 
