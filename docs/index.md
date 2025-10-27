@@ -20,3 +20,7 @@ just check   # lint + type-check
 just test    # run the pytest suite
 just docs    # build MkDocs documentation into the site/ directory
 ```
+
+## Application Entry Point (`src/main.py`)
+
+The application’s main module lives at `src/main.py`. It configures Logfire once at import time and exposes a `main()` function that emits a structured startup log and prints the greeting. Run `just run` (or `uv run python -m src.main`) to exercise the entry point. The same behaviour is documented here so MkDocs keeps the landing page in sync with the code.

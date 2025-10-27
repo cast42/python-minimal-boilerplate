@@ -1,8 +1,16 @@
 # python-minimal-boilerplate
 
-Modern minimal boilerplate for a Python project with developer dependencies uv, rust, ty, pytest, and mkdocs.
-It uses command runner just as a handy way to save and run project-specific commands.
-Logging is with [Pydantic Logfire](https://pydantic.dev/logfire) (but you can easily switch to loguru).
+Modern minimal boilerplate for a Python project with developer dependencies:
+
+- from Astral
+  - package manager: `uv`,
+  - linting: `rust`,
+  - type checking: `ty`
+- testing: `pytest`, and
+- documentation:`mkdocs`.
+
+It uses command runner `just` as a handy way to save and run project-specific commands.
+Logging is with [Pydantic Logfire](https://pydantic.dev/logfire) as an exampe, but you can easily switch to your own favorite logger.
 
 ## Installation
 
@@ -12,7 +20,7 @@ Create a new repository from the template. Open the browser at
 [https://github.com/cast42/python-minimal-boilerplate](https://github.com/cast42/python-minimal-boilerplate)
 and click `Use this template` (Create a new repository). Give your new repository a name. E.g. `new-repo-from-template`
 
-Next clone your new repository, generated from the template. Do not forget to replace url with url of the new repositry:
+Next clone your new repository, generated from the template. Do not forget to replace url with url of the new repository:
 
 ```sh
 git clone https://github.com/cast42/new-repo-from-template.git
@@ -46,7 +54,7 @@ Get your logfire token, copy the .env.example to .env and fill in value for  LOG
 
 ### Install Just for command invocation
 
-If just is not installed. install with (on osx)
+If `just` is not yet installed. install with (on osx)
 
 ```sh
 brew install just
@@ -54,7 +62,7 @@ brew install just
 
 ## Test if everthing works
 
-Check the code with ruff and ty from Astral by running  the command `just check`:
+Check the code quality with ruff and ty from Astral by running the command `just check`:
 
 ```sh
 > just check
@@ -75,7 +83,7 @@ uv run -m pytest -q
 1 passed in 0.01s
 ```
 
-Run the python code in main.py:
+Run the python code in `src/main.py`:
 
 ```sh
 > just run
@@ -87,7 +95,7 @@ the python program is run. The python program will also run if the LOGFIRE envir
 You should see this output:
 
 ```sh
-uv run python main.py
+uv run python -m src.main
 15:12:23.707 application.startup
 Hello from python-minimal-boilerplate!
 ```
@@ -102,13 +110,19 @@ just docs
 
 The rendered site is written to the `site/` directory.
 
+### View documentation for `src/main.py`
+
+After running `just docs` (or `uv run mkdocs serve` for live reload), open `site/index.html` in a browser. The landing page includes an *Application Entry Point (`src/main.py`)* section that explains how the module configures Logfire and what `main()` does. This keeps the narrative documentation aligned with the implementation in `src/main.py`.
+
 ## Available recipies in the just file
 
 ```sh
 > just
 Available recipes:
     run
-    docs
+
+    [docs]
+    docs *args
 
     [lifecycle]
     clean        # Remove temporary files
@@ -120,7 +134,4 @@ Available recipes:
     lint *args
     test *args
     typing *args
-
-    [docs]
-    docs *args
 ```

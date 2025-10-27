@@ -1,6 +1,6 @@
 """Tests for the project's main module."""
 
-import main as app_main
+from src import main as app_main
 
 
 def test_main_logs_greeting(capsys, monkeypatch) -> None:

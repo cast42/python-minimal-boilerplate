@@ -26,7 +26,7 @@ docs *args:
     uv run mkdocs build {{args}}
 
 run:
-    uv run python main.py
+    uv run python -m src.main
 
 # Remove temporary files
 [group('lifecycle')]
