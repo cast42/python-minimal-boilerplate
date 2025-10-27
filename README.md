@@ -22,13 +22,12 @@ git clone https://github.com/cast42/new-repo-from-template.git
 
 - Install `uv` following the upstream instructions: <https://docs.astral.sh/uv/getting-started/installation/>
 
-### Initialise the project
+## Initial setup of the project
 
 Change directory into the new cloned directory (Replace new-repo-from-template with the name of your repository):
 
 ```sh
 cd new-repo-from-template
-uv init --python 3.14
 ```
 
 ### Add development tools
@@ -47,41 +46,43 @@ Get your logfire token, copy the .env.example to .env and fill in value for  LOG
 
 ### Install Just for command invocation
 
+If just is not installed. install with (on osx)
+
 ```sh
 brew install just
 ```
 
 ## Test if everthing works
 
-Check the code with ruff and ty from Astral:
+Check the code with ruff and ty from Astral by running  the command `just check`:
 
 ```sh
-just check
+> just check
 uv run ruff check --fix 
 All checks passed!
 uv run ty check 
 Checking ------------------------------------------------------------ 2/2 files                                                                   All checks passed!
 ```
 
-Test the code:
+Test the code by issuing command `just test`:
 
 ```sh
-just test
+> just test
 uv run -m pytest -q 
-.                                                                                                                                          [100%]
-1 passed in 0.02s
+.
+1 passed in 0.01s
 ```
 
 Run the python code in main.py:
 
 ```sh
-just run
+> just run
 ```
 
-Since the justfile starts with `set dotenv-load` , the environment variables defined in the `.env` file are loaded before
+Since the justfile starts with `set dotenv-load`, the environment variables defined in the `.env` file are loaded before
 the python program is run. The python program will also run if the LOGFIRE environment variable is not set but no logging on pydantic endpoint will be done.
 
-You should see this:
+You should see this output:
 
 ```sh
 uv run python main.py
