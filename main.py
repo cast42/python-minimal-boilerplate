@@ -7,8 +7,8 @@ import sys
 
 import logfire
 
-GREETING = "Hello from python-minimal-boilerplate!"
-_TOKEN = os.getenv("LOGFIRE")
+GREETING: str = "Hello from python-minimal-boilerplate!"
+_TOKEN: str | None = os.getenv("LOGFIRE")
 
 # Configure Logfire once so that structured logs go to the console by default.
 logfire.configure(
