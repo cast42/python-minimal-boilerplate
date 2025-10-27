@@ -1,26 +1,29 @@
+"""Application entry point."""
+
+from __future__ import annotations
+
 import os
+import sys
 
 import logfire
 
+GREETING = "Hello from python-minimal-boilerplate!"
+_TOKEN = os.getenv("LOGFIRE")
 
-def main():
-    print("Hello from python-minimal-boilerplate!")
+# Configure Logfire once so that structured logs go to the console by default.
+logfire.configure(
+    token=_TOKEN,
+    service_name="python-minimal-boilerplate",
+    send_to_logfire=bool(_TOKEN),
+    console=logfire.ConsoleOptions(output=sys.stdout),
+)
+
+
+def main() -> None:
+    """Emit a greeting via Logfire and stdout."""
+    logfire.info("application.startup", message=GREETING)
+    print(GREETING)
 
 
 if __name__ == "__main__":
-    logfire_token = os.environ.get("LOGFIRE")
-    if logfire_token:
-        logfire.configure(
-            token=logfire_token,
-            console=False,
-            service_name="python-minimal-boilerplate",
-        )
-    else:
-        logfire.configure(
-            service_name="python-minimal-boilerplate",
-            send_to_logfire=False,
-            console=False,
-        )
-
-    logfire.info("Starting PDF to Markdown conversion tool")
     main()
