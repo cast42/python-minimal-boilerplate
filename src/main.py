@@ -2,21 +2,13 @@
 
 from __future__ import annotations
 
-import os
-import sys
-
 import logfire
 
 GREETING: str = "Hello from python-minimal-boilerplate!"
-_TOKEN: str | None = os.getenv("LOGFIRE")
 
-# Configure Logfire once so that structured logs go to the console by default.
-logfire.configure(
-    token=_TOKEN,
-    service_name="python-minimal-boilerplate",
-    send_to_logfire=bool(_TOKEN),
-    console=logfire.ConsoleOptions(output=sys.stdout),
-)
+# 'if-token-present' means nothing will be sent (and the example still works)
+# when a Logfire token/environment isn't configured.
+logfire.configure(send_to_logfire="if-token-present")
 
 
 def main() -> None:

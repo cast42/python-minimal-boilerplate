@@ -1,9 +1,9 @@
 # python-minimal-boilerplate
 
-Modern minimal boilerplate for a Python project with developer dependencies:
+Modern minimal boilerplate for a Python project with following developer dependencies:
 
 - from Astral
-  - package manager: `uv`,
+  - package manager for dependency management: `uv`,
   - linting: `rust`,
   - type checking: `ty`
 - testing: `pytest`, and
@@ -14,7 +14,7 @@ Logging is with [Pydantic Logfire](https://pydantic.dev/logfire) as an exampe, b
 
 ## Installation
 
-### Create new repository starting from the template
+### Create a new repository starting from the template
 
 Create a new repository from the template. Open the browser at
 [https://github.com/cast42/python-minimal-boilerplate](https://github.com/cast42/python-minimal-boilerplate)
@@ -51,6 +51,8 @@ uv add logfire
 ```
 
 Get your logfire token, copy the .env.example to .env and fill in value for  LOGFIRE.
+The app calls `logfire.configure(send_to_logfire='if-token-present')`, so nothing
+is sent to Logfire unless you provide credentials.
 
 ### Install Just for command invocation
 
