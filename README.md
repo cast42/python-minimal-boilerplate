@@ -50,7 +50,7 @@ uv add --dev ruff ty pytest mkdocs
 uv add logfire
 ```
 
-Get your logfire token, copy the .env.example to .env and fill in value for  LOGFIRE.
+Get your logfire token (get it here [https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/](https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/)), copy the .env.example to .env and fill in value for  LOGFIRE_TOKEN.
 The app calls `logfire.configure(send_to_logfire='if-token-present')`, so nothing
 is sent to Logfire unless you provide credentials.
 
@@ -92,7 +92,7 @@ Run the python code in `src/main.py`:
 ```
 
 Since the justfile starts with `set dotenv-load`, the environment variables defined in the `.env` file are loaded before
-the python program is run. The python program will also run if the LOGFIRE environment variable is not set but no logging on pydantic endpoint will be done.
+the python program is run. The python program will also run if the LOGFIRE_TOKEN environment variable is not set but no logging on pydantic endpoint will be done.
 
 You should see this output:
 
