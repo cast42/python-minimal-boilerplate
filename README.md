@@ -98,6 +98,17 @@ Hello from python-minimal-boilerplate!
 
 ### Build documentation
 
+Alter the site name, description and name in the [mkdocs.yml](./mkdocs.yml) file:
+
+```yaml
+site_name: new-repo-from-template
+site_description: Description of your python project
+site_author: Your Name
+nav:
+  - Home: index.md
+docs_dir: docs
+```
+
 Generate the static site with MkDocs:
 
 ```sh
