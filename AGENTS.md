@@ -1,42 +1,46 @@
 # Agent Handbook
 
-## Environment Setup
+Guidelines for automation agents working inside repositories created from this template.
 
-- Install `uv` following the upstream instructions: <https://docs.astral.sh/uv/getting-started/installation/>
-- Initialize each project with the newest available Python interpreter, e.g.:
+## Getting Started Inside a Clone
 
-```sh
-uv init --python 3.14
-```
+- Confirm `uv` is available: <https://docs.astral.sh/uv/getting-started/installation/>.  
+- Synchronize the environment before running code: `just install` (alias of `uv sync`).  
+- When bootstrapping a fresh variant that needs a newer interpreter, re-run `uv init --python <version>` at the project root before syncing.
 
-## Dependency Management
+## Managing Dependencies
 
-- Add runtime dependencies with `uv add`, for example `uv add logfire`.
-- Add development-only tooling with the `--dev` flag, e.g. `uv add --dev ruff`.
-- Install MkDocs for documentation with `uv add --dev mkdocs`.
+- Add runtime packages with `uv add <package>`.  
+- Add tooling with the `--dev` flag, e.g. `uv add --dev ruff ty pytest mkdocs`.  
+- After editing dependencies, commit the updated `pyproject.toml` and `uv.lock`, then run `just check` and `just test`.
 
-## Code Quality Standards
+## Project Commands
 
-- Lint with Ruff, check types with Ty, and test with pytest. All three can be installed via:
+Use the `justfile` to keep task automation consistent. Key recipes:
 
-```sh
-uv add --dev ruff ty pytest
-```
+- `just check`: Invokes Ruff (autofix enabled) and Ty type checks. Run before opening a PR or after dependency changes.  
+- `just lint`, `just typing`: Individual quality gates when you need faster feedback.  
+- `just test`: Executes the `pytest` suite in `tests/`.  
+- `just docs`: Builds the MkDocs site to `site/`; useful after updating docstrings or docs.  
+- `just run`: Launches the application entry point (`uv run python -m src.main`).  
+- `just clean`: Clears caches (`.venv`, `.uv-cache`, `__pycache__`, etc.) when the environment misbehaves.  
+- `just update`: Runs `uv sync --upgrade` to refresh dependencies; follow with `just check`/`just test`.
 
-- Prefer builtin collection types (`list`, `dict`, etc.) over legacy aliases from `typing`.
-- Keep typing annotations up to date and provide function docstrings so MkDocs can render documentation.
+All recipes inherit `.env` values because the `justfile` uses `set dotenv-load`.
 
-## Observability
+## Code Quality Expectations
 
-- Experiment with [logfire](https://pydantic.dev/logfire) from Pydantic for logging.
-- Telemetry routing to Azure is still unresolved; note this limitation in proposals or status updates.
+- Maintain type hints and concise docstrings so MkDocs stays up to date.  
+- Prefer built-in collection types (`list`, `dict`, `set`, etc.) over legacy `typing` aliases.  
+- Treat Ruff, Ty, and pytest warnings as failures; resolve them before finalizing work.
 
-## Command Automation
+## Observability Notes
 
-- Use the project `justfile` to run repeatable commands.
-- Install `just` via <https://github.com/casey/just/blob/master/README.md> if it is not already available.
-- Add `set dotenv-load` to make commands inherit environment variables from `.env`.
-- Conventionally:
-  - `just check` combines linting and type checking.
-  - `just test` executes the test suite in the `tests` directory.
-  - `just docs` builds the MkDocs site into `site/`.
+- Logging uses Pydantic [Logfire](https://pydantic.dev/logfire). Configure credentials by copying `.env.example` to `.env` and setting `LOGFIRE_TOKEN`.  
+- Telemetry export to Azure remains unresolved; mention this limitation when proposing observability changes.
+
+## When Collaborating
+
+- Include a short summary of commands executed and results in status updates.  
+- Surface tooling limitations or manual steps you could not automate.  
+- Align doc updates with code changes so `just docs` continues to produce accurate reference pages.

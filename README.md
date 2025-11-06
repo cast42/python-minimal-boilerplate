@@ -2,15 +2,15 @@
 
 Modern minimal boilerplate for a Python project with following developer dependencies:
 
-- from Astral
+- from [Astral](https://astral.sh):
   - package manager for dependency management: `uv`,
   - linting: `rust`,
   - type checking: `ty`
 - testing: `pytest`, and
-- documentation:`mkdocs`.
+- [documentation](https://www.mkdocs.org):`mkdocs`.
 
-It uses command runner `just` as a handy way to save and run project-specific commands.
-Logging is with [Pydantic Logfire](https://pydantic.dev/logfire) as an exampe, but you can easily switch to your own favorite logger.
+It uses command runner [`just`](https://github.com/casey/just) as a handy way to save and run project-specific commands.
+Logging is optionally with [Pydantic Logfire](https://pydantic.dev/logfire) as an example, but you can easily switch to your own favorite logger.
 
 ## Installation
 
@@ -30,6 +30,16 @@ git clone https://github.com/cast42/new-repo-from-template.git
 
 - Install `uv` following the upstream instructions: <https://docs.astral.sh/uv/getting-started/installation/>
 
+### Install Just for command invocation
+
+If `just` is not yet installed. Install with (on osx)
+
+```sh
+brew install just
+```
+
+See here for [Installation instructions for just on other plafforms](<https://github.com/casey/just?tab=readme-ov-file#installation>)
+
 ## Initial setup of the project
 
 Change directory into the new cloned directory (Replace new-repo-from-template with the name of your repository):
@@ -38,29 +48,13 @@ Change directory into the new cloned directory (Replace new-repo-from-template w
 cd new-repo-from-template
 ```
 
-### Add development tools
+### Optional: Provide logfire token for logging in the eu cloud
 
-```sh
-uv add --dev ruff ty pytest mkdocs
-```
-
-### Optional: Install logfire for logging
-
-```sh
-uv add logfire
-```
+If you want to inspect the logging via the logfire project site, you need to provide the logfire token. If no token is provided, no logging is sent to the cloud and only logging is emmited on the command line output.
 
 Get your logfire token (get it here [https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/](https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/)), copy the .env.example to .env and fill in value for  LOGFIRE_TOKEN.
 The app calls `logfire.configure(send_to_logfire='if-token-present')`, so nothing
 is sent to Logfire unless you provide credentials.
-
-### Install Just for command invocation
-
-If `just` is not yet installed. install with (on osx)
-
-```sh
-brew install just
-```
 
 ## Test if everthing works
 
@@ -94,7 +88,7 @@ Run the python code in `src/main.py`:
 Since the justfile starts with `set dotenv-load`, the environment variables defined in the `.env` file are loaded before
 the python program is run. The python program will also run if the LOGFIRE_TOKEN environment variable is not set but no logging on pydantic endpoint will be done.
 
-You should see this output:
+You should see this output from running `just run` on the commandline:
 
 ```sh
 uv run python -m src.main
@@ -116,7 +110,9 @@ The rendered site is written to the `site/` directory.
 
 After running `just docs` (or `uv run mkdocs serve` for live reload), open `site/index.html` in a browser. The landing page includes an *Application Entry Point (`src/main.py`)* section that explains how the module configures Logfire and what `main()` does. This keeps the narrative documentation aligned with the implementation in `src/main.py`.
 
-## Available recipies in the just file
+## Just recipes
+
+Run `just` (or the default alias `just --list`) to see every command that ships with the template:
 
 ```sh
 > just
@@ -137,3 +133,15 @@ Available recipes:
     test *args
     typing *args
 ```
+
+Each recipe is meant for a specific moment in your workflow:
+
+- `run`: Executes `python -m src.main` with `uv run`. Use this to exercise the main entry point locally once dependencies are synced.
+- `docs`: Builds the static site with MkDocs. Run after updating docstrings or MkDocs content to regenerate `site/`.
+- `clean`: Deletes build and cache artifacts (`.venv`, `.pytest_cache`, `.ruff_cache`, `.uv-cache`, `__pycache__`, `*.egg-info`). Reach for this if tooling behaves strangely or you want a fresh workspace before packaging or committing.
+- `install`: Calls `uv sync` to ensure the local virtual environment reflects `pyproject.toml`/`uv.lock`. Use after cloning or when dependencies change.
+- `update`: Runs `uv sync --upgrade` to refresh dependencies to their latest allowed versions. Follow up with `just check`/`just test` to confirm upgrades are safe.
+- `test`: Invokes `uv run -m pytest -q`. Run it before pushing or whenever you change behavior covered by the test suite.
+- `lint`: Runs Ruff with `--fix` so formatting and autofixable lint issues are corrected. Helpful during development to keep style consistent.
+- `typing`: Performs type checking with Ty. Use it when changing interfaces or touching typed modules.
+- `check`: Convenience wrapper that combines `lint` (without formatting churn beyond Ruff fixes) and `typing`. Ideal for pre-commit validation or CI parity.

@@ -14,12 +14,11 @@ lint *args:
 [group('qa')]
 typing *args:
     uv run ty check {{args}}
-    cd azure-function; uv run ty check {{args}}
 
 [group('qa')]
 check *args:
-    uv run ruff check --fix {{args}}
-    uv run ty check {{args}}
+    just lint {{args}}
+    just typing {{args}}
 
 [group('docs')]
 docs *args:
