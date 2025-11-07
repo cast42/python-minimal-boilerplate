@@ -18,12 +18,12 @@ Logging is optionally with [Pydantic Logfire](https://pydantic.dev/logfire) as a
 
 Create a new repository from the template. Open the browser at
 [https://github.com/cast42/python-minimal-boilerplate](https://github.com/cast42/python-minimal-boilerplate)
-and click `Use this template` (Create a new repository). Give your new repository a name. E.g. `new-repo-from-template`
+and click `Use this template` (Create a new repository). Give your new repository a name. E.g. `new-repo-name-from-template`
 
 Next clone your new repository, generated from the template. Do not forget to replace url with url of the new repository:
 
 ```sh
-git clone https://github.com/cast42/new-repo-from-template.git
+git clone https://github.com/<your github handle>/<new-repo-name-from-template>.git
 ```
 
 ### Install uv if not already installed
@@ -38,14 +38,23 @@ If `just` is not yet installed. Install with (on osx)
 brew install just
 ```
 
-See here for [Installation instructions for just on other plafforms](<https://github.com/casey/just?tab=readme-ov-file#installation>)
+or on Ubuntu Linux:
+
+```
+sudo apt update
+sudo apt install just
+```
+
+or on other platforms:
+
+[Installation instructions for just on other plafforms](<https://github.com/casey/just?tab=readme-ov-file#installation>)
 
 ## Initial setup of the project
 
 Change directory into the new cloned directory (Replace new-repo-from-template with the name of your repository):
 
 ```sh
-cd new-repo-from-template
+cd new-repo-name-from-template
 ```
 
 ### Optional: Provide logfire token for logging in the eu cloud
@@ -101,7 +110,7 @@ Hello from python-minimal-boilerplate!
 Alter the site name, description and name in the [mkdocs.yml](./mkdocs.yml) file:
 
 ```yaml
-site_name: new-repo-from-template
+site_name: new-repo-name-from-template
 site_description: Description of your python project
 site_author: Your Name
 nav:
