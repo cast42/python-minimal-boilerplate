@@ -5,13 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "logfire>=4.14.2",
+    "logfire>=4.16.0",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2",
-    "ruff>=0.5.7",
-    "mkdocs>=1.6.0",
-    "ty>=0.0.1a24",
+    "pytest>=9.0.2",
+    "ruff>=0.14.9",
+    "mkdocs>=1.6.1",
+    "ty>=0.0.2",
 ]
