@@ -37,7 +37,8 @@ clean:
 # Update dependencies
 [group('lifecycle')]
 update:
-    uv sync --upgrade
+    # Upgrade all dependencies in the lock file but leave the .venv
+    uv lock --upgrade
 
 # Ensure project virtualenv is up to date
 [group('lifecycle')]
