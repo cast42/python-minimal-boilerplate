@@ -14,6 +14,7 @@ dev = [
     "ruff>=0.14.10",
     "zensical",
     "ty>=0.0.9",
+    "pre-commit>=4.5.1",
 ]
 
 [build-system]

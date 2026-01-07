@@ -12,7 +12,7 @@ test *args:
 
 [group('qa')]
 lint *args:
-    uv run ruff check --fix {{args}} 
+    uv run ruff check --fix {{args}}
 
 [group('qa')]
 typing *args:
@@ -20,6 +20,7 @@ typing *args:
 
 [group('qa')]
 check *args:
+    uv run pre-commit run --all-files
     just lint {{args}}
     just typing {{args}}
 
@@ -46,4 +47,5 @@ update:
 # Ensure project virtualenv is up to date
 [group('lifecycle')]
 install:
-    uv sync
+    uv sync --dev
+    uv run pre-commit install

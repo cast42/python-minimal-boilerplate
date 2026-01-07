@@ -71,9 +71,9 @@ Check the code quality with ruff and ty from Astral by running the command `just
 
 ```sh
 > just check
-uv run ruff check --fix 
+uv run ruff check --fix
 All checks passed!
-uv run ty check 
+uv run ty check
 Checking ------------------------------------------------------------ 2/2
 files
 All checks passed!
@@ -83,7 +83,7 @@ Test the code by issuing command `just test`:
 
 ```sh
 > just test
-uv run -m pytest -q 
+uv run -m pytest -q
 .
 1 passed in 0.01s
 ```
