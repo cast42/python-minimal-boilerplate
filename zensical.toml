@@ -1,0 +1,25 @@
+[project]
+site_name = "python-minimal-boilerplate"
+site_description = "Modern minimal boilerplate for a Python project"
+site_author = "Your Name"
+copyright = "Copyright &copy; 2026 The authors"
+
+[project.theme]
+language = "en"
+features = [
+    "content.code.copy",
+    "navigation.footer",
+    "navigation.instant",
+    "navigation.top",
+    "search.highlight",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"

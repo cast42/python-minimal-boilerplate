@@ -25,7 +25,7 @@ check *args:
 
 [group('docs')]
 docs *args:
-    uv run mkdocs build {{args}}
+    uv run zensical build {{args}}
 
 run:
     uv run python -m src.main

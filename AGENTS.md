@@ -11,7 +11,7 @@ Guidelines for automation agents working inside repositories created from this t
 ## Managing Dependencies
 
 - Add runtime packages with `uv add <package>`.  
-- Add tooling with the `--dev` flag, e.g. `uv add --dev ruff ty pytest mkdocs`.  
+- Add tooling with the `--dev` flag, e.g. `uv add --dev ruff ty pytest zensical`.  
 - After editing dependencies, commit the updated `pyproject.toml` and `uv.lock`, then run `just check` and `just test`.
 
 ## Project Commands
@@ -21,7 +21,7 @@ Use the `justfile` to keep task automation consistent. Key recipes:
 - `just check`: Invokes Ruff (autofix enabled) and Ty type checks. Run before opening a PR or after dependency changes.  
 - `just lint`, `just typing`: Individual quality gates when you need faster feedback.  
 - `just test`: Executes the `pytest` suite in `tests/`.  
-- `just docs`: Builds the MkDocs site to `site/`; useful after updating docstrings or docs.  
+- `just docs`: Builds documentation with zensical; useful after updating docstrings.  
 - `just run`: Launches the application entry point (`uv run python -m src.main`).  
 - `just clean`: Clears caches (`.venv`, `.uv-cache`, `__pycache__`, etc.) when the environment misbehaves.  
 - `just update`: Runs `uv sync --upgrade` to refresh dependencies; follow with `just check`/`just test`.
@@ -30,7 +30,7 @@ All recipes inherit `.env` values because the `justfile` uses `set dotenv-load`.
 
 ## Code Quality Expectations
 
-- Maintain type hints and concise docstrings so MkDocs stays up to date.  
+- Maintain type hints and concise docstrings so zensical documentation stays up to date.  
 - Prefer built-in collection types (`list`, `dict`, `set`, etc.) over legacy `typing` aliases.  
 - Treat Ruff, Ty, and pytest warnings as failures; resolve them before finalizing work.
 

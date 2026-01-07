@@ -4,10 +4,10 @@ Modern minimal boilerplate for a Python project with following developer depende
 
 - from [Astral](https://astral.sh):
   - package manager for dependency management: `uv`,
-  - linting: `rust`,
+  - linting: `ruff`,
   - type checking: `ty`
 - testing: `pytest`, and
-- [documentation](https://www.mkdocs.org):`mkdocs`.
+- [documentation](https://github.com/cast42/zensical): `zensical`.
 
 It uses command runner [`just`](https://github.com/casey/just) as a handy way to save and run project-specific commands.
 Logging is optionally with [Pydantic Logfire](https://pydantic.dev/logfire) as an example, but you can easily switch to your own favorite logger.
@@ -113,18 +113,16 @@ Update things like your preferred line length, indentation width, naming convent
 
 ### Build documentation
 
-Alter the site name, description and name in the [mkdocs.yml](./mkdocs.yml) file:
+Configure the site name, description and author in [zensical.toml](./zensical.toml):
 
-```yaml
-site_name: new-repo-name-from-template
-site_description: Description of your python project
-site_author: Your Name
-nav:
-  - Home: index.md
-docs_dir: docs
+```toml
+[project]
+site_name = "your-project-name"
+site_description = "Description of your python project"
+site_author = "Your Name"
 ```
 
-Generate the static site with MkDocs:
+Generate the static documentation with zensical:
 
 ```sh
 just docs
@@ -134,7 +132,7 @@ The rendered site is written to the `site/` directory.
 
 ### View documentation for `src/main.py`
 
-After running `just docs` (or `uv run mkdocs serve` for live reload), open `site/index.html` in a browser. The landing page includes an *Application Entry Point (`src/main.py`)* section that explains how the module configures Logfire and what `main()` does. This keeps the narrative documentation aligned with the implementation in `src/main.py`.
+After running `just docs`, view the generated documentation. Zensical extracts docstrings and type information directly from your Python source files, keeping the documentation aligned with the implementation in `src/main.py`.
 
 ## Just recipes
 
@@ -163,7 +161,7 @@ Available recipes:
 Each recipe is meant for a specific moment in your workflow:
 
 - `run`: Executes `python -m src.main` with `uv run`. Use this to exercise the main entry point locally once dependencies are synced.
-- `docs`: Builds the static site with MkDocs. Run after updating docstrings or MkDocs content to regenerate `site/`.
+- `docs`: Builds documentation with zensical. Run after updating docstrings to regenerate documentation.
 - `clean`: Deletes build and cache artifacts (`.venv`, `.pytest_cache`, `.ruff_cache`, `.uv-cache`, `__pycache__`, `*.egg-info`). Reach for this if tooling behaves strangely or you want a fresh workspace before packaging or committing.
 - `install`: Calls `uv sync` to ensure the local virtual environment reflects `pyproject.toml`/`uv.lock`. Use after cloning or when dependencies change.
 - `update`: Runs `uv sync --upgrade` to refresh dependencies to their latest allowed versions. Follow up with `just check`/`just test` to confirm upgrades are safe.
