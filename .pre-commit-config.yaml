@@ -20,3 +20,12 @@ repos:
       - id: ruff
         args: [--exit-non-zero-on-fix]
       - id: ruff-format
+
+  - repo: https://github.com/NSPBot911/ty-pre-commit
+    # ty version.
+    rev: v0.0.8
+    hooks:
+      # Run the type checker.
+      - id: ty-check
+        additional_dependencies:
+          - logfire>=4.16.0
