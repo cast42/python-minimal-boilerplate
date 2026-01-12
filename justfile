@@ -22,10 +22,6 @@ typing *args:
 check *args:
     # Run pre-commit hooks against all files
     uv run pre-commit run --all-files
-    # optional because already run by pre-commit: Run linter
-    just lint {{args}}
-    # optional because already run by pre-commit:: Run type checks
-    just typing {{args}}
 
 [group('docs')]
 docs *args:
