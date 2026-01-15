@@ -5,7 +5,7 @@ Guidelines for automation agents working inside repositories created from this t
 ## Getting Started Inside a Clone
 
 - Confirm `uv` is available: <https://docs.astral.sh/uv/getting-started/installation/>.
-- Synchronize the environment before running code: `just install` (alias of `uv sync`).
+- Synchronize the environment before running code: `just install` (runs `uv sync --dev` and installs pre-commit hooks).
 - When bootstrapping a fresh variant that needs a newer interpreter, re-run `uv init --python <version>` at the project root before syncing.
 
 ## Managing Dependencies
@@ -18,13 +18,14 @@ Guidelines for automation agents working inside repositories created from this t
 
 Use the `justfile` to keep task automation consistent. Key recipes:
 
-- `just check`: Invokes Ruff (autofix enabled) and Ty type checks. Run before opening a PR or after dependency changes.
+- `just install`: Syncs dev dependencies and installs pre-commit hooks (`uv sync --dev`, `uv run pre-commit install`).
+- `just check`: Runs all pre-commit hooks against every file (Ruff, Ruff format, Ty, and hygiene hooks). Run before opening a PR or after dependency changes.
 - `just lint`, `just typing`: Individual quality gates when you need faster feedback.
-- `just test`: Executes the `pytest` suite in `tests/`.
-- `just docs`: Builds documentation with zensical; useful after updating docstrings.
+- `just test`: Executes `pytest` via `uv run -m pytest -q`.
+- `just docs`: Builds documentation with zensical (`uv run zensical build`); useful after updating docstrings.
 - `just run`: Launches the application entry point (`uv run python -m src.main`).
 - `just clean`: Clears caches (`.venv`, `.uv-cache`, `__pycache__`, etc.) when the environment misbehaves.
-- `just update`: Runs `uv sync --upgrade` to refresh dependencies; follow with `just check`/`just test`.
+- `just update`: Runs `uv lock --upgrade` to refresh dependency versions in `uv.lock`; follow with `just install` when you need to update the virtualenv.
 
 All recipes inherit `.env` values because the `justfile` uses `set dotenv-load`.
 
