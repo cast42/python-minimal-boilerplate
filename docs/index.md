@@ -18,9 +18,17 @@ Use the `just` recipes to lint, type-check, test, and build project documentatio
 ```sh
 just check   # lint + type-check
 just test    # run the pytest suite
-just docs    # build documentation with zensical
+just docs    # build documentation with zensical and mkdocstrings zensical plugin
 ```
 
 ## Application Entry Point (`src/main.py`)
 
 The application's main module lives at `src/main.py`. It configures Logfire with `send_to_logfire='if-token-present'`, so nothing leaves your machine unless a token is configured, and exposes a `main()` function that emits a structured startup log and prints the greeting. Run `just run` (or `uv run python -m src.main`) to exercise the entry point.
+
+::: python_minimal_boilerplate.main
+    handler: python
+    options:
+      members:
+        - greeting
+      show_root_heading: false
+      show_source: true
