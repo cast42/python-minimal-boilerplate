@@ -1,7 +1,5 @@
 """Application entry point."""
 
-from __future__ import annotations
-
 import logfire
 
 GREETING: str = "Hello from python-minimal-boilerplate!"
