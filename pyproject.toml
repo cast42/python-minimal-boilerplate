@@ -13,7 +13,7 @@ dev = [
     "ruff>=0.14.10",
     "ty>=0.0.12",
     "pre-commit>=4.5.1",
-    "zensical>=0.0.17",
+    "zensical>=0.0.19",
     "pytest>=9.0.2",
     "mkdocstrings-python>=2.0.1",
 ]

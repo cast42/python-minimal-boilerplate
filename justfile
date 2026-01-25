@@ -42,9 +42,11 @@ clean:
 update:
     # Upgrade all dependencies in the lock file but leave the .venv
     uv lock --upgrade
+    uv -q export --format pylock.toml -o pylock.toml
 
 # Ensure project virtualenv is up to date
 [group('lifecycle')]
 install:
     uv sync --dev
+    uv -q export --format pylock.toml -o pylock.toml
     uv run pre-commit install
