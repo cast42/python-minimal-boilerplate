@@ -1,18 +1,10 @@
-"""Application entry point."""
+"""Application entry point.
 
-import logfire
+Kept as a tiny shim so `python -m src.main` continues to work for newcomers.
+The actual implementation lives in the installable package.
+"""
 
-GREETING: str = "Hello from python-minimal-boilerplate!"
-
-# 'if-token-present' means nothing will be sent (and the example still works)
-# when a Logfire token/environment isn't configured.
-logfire.configure(send_to_logfire="if-token-present")
-
-
-def main() -> None:
-    """Emit a greeting via Logfire and stdout."""
-    logfire.info("application.startup", message=GREETING)
-    print(GREETING)
+from python_minimal_boilerplate.cli import main
 
 
 if __name__ == "__main__":
