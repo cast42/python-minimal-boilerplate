@@ -8,6 +8,9 @@ dependencies = [
     "logfire>=4.16.0",
 ]
 
+[project.scripts]
+python-minimal-boilerplate = "python_minimal_boilerplate.cli:main"
+
 [dependency-groups]
 dev = [
     "ruff>=0.14.10",
