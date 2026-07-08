@@ -1,6 +1,6 @@
-"""Tests for the project's main module."""
+"""Tests for the project's CLI entry point."""
 
-from src import main as app_main
+from python_minimal_boilerplate import cli
 
 
 def test_main_logs_greeting(capsys, monkeypatch) -> None:
@@ -10,13 +10,13 @@ def test_main_logs_greeting(capsys, monkeypatch) -> None:
     def fake_info(event: str, **kwargs):
         calls.append((event, kwargs))
 
-    monkeypatch.setattr(app_main.logfire, "info", fake_info)
+    monkeypatch.setattr(cli.logfire, "info", fake_info)
 
-    app_main.main()
+    cli.main()
     captured = capsys.readouterr()
 
     std_lines = captured.out.strip().splitlines()
 
-    assert calls == [("application.startup", {"message": app_main.GREETING})]
+    assert calls == [("application.startup", {"message": cli.GREETING})]
     assert std_lines
-    assert std_lines[-1] == app_main.GREETING
+    assert std_lines[-1] == cli.GREETING
