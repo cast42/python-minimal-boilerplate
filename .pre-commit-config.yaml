@@ -21,11 +21,9 @@ repos:
         args: [--exit-non-zero-on-fix]
       - id: ruff-format
 
-  - repo: https://github.com/NSPBot911/ty-pre-commit
+  - repo: https://github.com/astral-sh/ty-pre-commit
     # ty version.
-    rev: v0.0.12
+    rev: v0.0.56
     hooks:
       # Run the type checker.
-      - id: ty-check
-        additional_dependencies:
-          - logfire>=4.16.0
+      - id: ty
