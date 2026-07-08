@@ -27,3 +27,11 @@ repos:
     hooks:
       # Run the type checker.
       - id: ty
+
+  - repo: local
+    hooks:
+      - id: uv-audit
+        name: uv audit
+        entry: uv audit --locked
+        language: system
+        pass_filenames: false
