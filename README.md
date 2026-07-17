@@ -105,11 +105,11 @@ uv run python -m src.main
 Hello from python-minimal-boilerplate!
 ```
 
-### Customize the Copilot instructions
+### Use an agent to create your project
 
-The template ships with `.vscode/copilot-instructions.md` for GitHub Copilot (or similar AI helpers).
-Treat it as a starting point and adapt the contents to your personal style so Copilot mirrors how you like to code.
-Update things like your preferred line length, indentation width, naming conventions, or any other guidance that differs from the defaults baked into the file.
+The template keeps short shared instructions in `AGENTS.md`, which Codex and GitHub Copilot can read. The full setup workflow is in `.agents/skills/minimal-python-boilerplate/SKILL.md`. Claude reads its small adapter file in `.claude/CLAUDE.md` and uses the same skill through `.claude/skills`.
+
+Ask your agent to turn the template into the Python application or library you need. The skill guides the agent through project naming, package layout, dependencies, tests, documentation, and final checks.
 
 ### Build documentation
 
