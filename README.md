@@ -88,7 +88,7 @@ uv run -m pytest -q
 1 passed in 0.01s
 ```
 
-Run the python code in `src/main.py`:
+Run the application entry point:
 
 ```sh
 > just run
@@ -100,7 +100,7 @@ the python program is run. The python program will also run if the LOGFIRE_TOKEN
 You should see this output from running `just run` on the commandline:
 
 ```sh
-uv run python -m src.main
+uv run python-minimal-boilerplate
 15:12:23.707 application.startup
 Hello from python-minimal-boilerplate!
 ```
@@ -110,6 +110,9 @@ Hello from python-minimal-boilerplate!
 The template keeps short shared instructions in `AGENTS.md`, which Codex and GitHub Copilot can read. The full setup workflow is in `.agents/skills/minimal-python-boilerplate/SKILL.md`. Claude reads its small adapter file in `.claude/CLAUDE.md` and uses the same skill through `.claude/skills`.
 
 Ask your agent to turn the template into the Python application or library you need. The skill guides the agent through project naming, package layout, dependencies, tests, documentation, and final checks.
+
+> [!NOTE]
+> **Windows:** `.claude/skills` is a symlink to `.agents/skills`. On Windows checkouts without symlink support (`git config core.symlinks false`, the default) it appears as a plain text file and Claude will not discover the skill. Either enable symlinks (`git clone -c core.symlinks=true ...`, requires Developer Mode or admin rights) or replace the symlink with a copy of the `.agents/skills` folder.
 
 ### Build documentation
 
@@ -130,9 +133,9 @@ just docs
 
 The rendered site is written to the `site/` directory.
 
-### View documentation for `src/main.py`
+### View documentation for the package
 
-After running `just docs`, view the generated documentation. Zensical extracts docstrings and type information directly from your Python source files, keeping the documentation aligned with the implementation in `src/main.py`.
+After running `just docs`, view the generated documentation. Zensical extracts docstrings and type information directly from your Python source files, keeping the documentation aligned with the implementation in `src/python_minimal_boilerplate/`.
 
 ## Just recipes
 
@@ -160,11 +163,11 @@ Available recipes:
 
 Each recipe is meant for a specific moment in your workflow:
 
-- `run`: Executes `python -m src.main` with `uv run`. Use this to exercise the main entry point locally once dependencies are synced.
+- `run`: Executes the `python-minimal-boilerplate` console script with `uv run`. Use this to exercise the main entry point locally once dependencies are synced.
 - `docs`: Builds documentation with zensical. Run after updating docstrings to regenerate documentation.
 - `clean`: Deletes build and cache artifacts (`.venv`, `.pytest_cache`, `.ruff_cache`, `.uv-cache`, `__pycache__`, `*.egg-info`). Reach for this if tooling behaves strangely or you want a fresh workspace before packaging or committing.
-- `install`: Calls `uv sync` to ensure the local virtual environment reflects `pyproject.toml`/`uv.lock`. Use after cloning or when dependencies change.
-- `update`: Runs `uv sync --upgrade` to refresh dependencies to their latest allowed versions. Follow up with `just check`/`just test` to confirm upgrades are safe.
+- `install`: Runs `uv sync --dev`, regenerates `pylock.toml`, and installs the pre-commit hooks. Use after cloning or when dependencies change.
+- `update`: Runs `uv lock --upgrade` to refresh `uv.lock` to the latest allowed versions and re-exports `pylock.toml`. Follow up with `just install`, `just check`, and `just test` to confirm upgrades are safe.
 - `test`: Invokes `uv run -m pytest -q`. Run it before pushing or whenever you change behavior covered by the test suite.
 - `lint`: Runs Ruff with `--fix` so formatting and autofixable lint issues are corrected. Helpful during development to keep style consistent.
 - `typing`: Performs type checking with Ty. Use it when changing interfaces or touching typed modules.

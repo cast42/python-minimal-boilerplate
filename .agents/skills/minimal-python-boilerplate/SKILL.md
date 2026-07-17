@@ -28,7 +28,7 @@ Search for template names and placeholders before editing. Rename files and upda
 ## 3. Shape the project
 
 - Keep the `src` layout and place importable code in `src/<package_name>/`.
-- Remove `src/main.py` when the package entry point supersedes it; otherwise make the `just run` recipe and documentation match the chosen entry point.
+- Make the `just run` recipe and documentation match the chosen entry point.
 - Keep `__init__.py` small. Put behavior in focused modules and expose only the intended public API.
 - For a CLI, provide a typed `main()` and map `[project.scripts]` to it.
 - For a library, remove the example CLI and project script unless requested.
@@ -38,7 +38,7 @@ Search for template names and placeholders before editing. Rename files and upda
 ## 4. Configure tooling
 
 - Update project metadata, `requires-python`, dependencies, scripts, and tool target versions in `pyproject.toml`.
-- Add runtime dependencies with `uv add <package>` and developer dependencies with `uv add --dev <package>` so `pyproject.toml` and `uv.lock` stay aligned.
+- Add runtime dependencies with `uv add <package>` and developer dependencies with `uv add --dev <package>` so `pyproject.toml` and `uv.lock` stay aligned. Run `just install` afterwards; it also regenerates `pylock.toml`, which must never be edited by hand.
 - Retain Ruff, Ty, pytest, pre-commit, and the `justfile` recipes unless the user asks for a different toolchain.
 - Keep `just install`, `just check`, `just test`, `just run`, and `just docs` accurate for the resulting project. Remove recipes for deliberately omitted features.
 - Treat Logfire as optional example functionality. Remove it and its environment instructions when observability is not requested. If retained, configure it to avoid remote export without an explicit token. Do not claim Azure telemetry support.

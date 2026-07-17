@@ -28,7 +28,7 @@ docs *args:
     uv run zensical build {{args}}
 
 run:
-    uv run python -m src.main
+    uv run python-minimal-boilerplate
 
 # Remove temporary files
 [group('lifecycle')]

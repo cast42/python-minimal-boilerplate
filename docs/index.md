@@ -21,9 +21,9 @@ just test    # run the pytest suite
 just docs    # build documentation with zensical and mkdocstrings zensical plugin
 ```
 
-## Application Entry Point (`src/main.py`)
+## Application Entry Point
 
-The application's main module lives at `src/main.py`. It configures Logfire with `send_to_logfire='if-token-present'`, so nothing leaves your machine unless a token is configured, and exposes a `main()` function that emits a structured startup log and prints the greeting. Run `just run` (or `uv run python -m src.main`) to exercise the entry point.
+The CLI entry point lives at `src/python_minimal_boilerplate/cli.py`. It configures Logfire with `send_to_logfire='if-token-present'`, so nothing leaves your machine unless a token is configured, and exposes a `main()` function that emits a structured startup log and prints the greeting. Run `just run` (or `uv run python-minimal-boilerplate`) to exercise the entry point.
 
 ::: python_minimal_boilerplate.main
     handler: python
