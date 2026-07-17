@@ -67,16 +67,24 @@ is sent to Logfire unless you provide credentials.
 
 ## Test if everthing works
 
-Check the code quality with ruff and ty from Astral by running the command `just check`:
+Check the code quality with the configured pre-commit hooks by running the command `just check`:
 
 ```sh
 > just check
-uv run ruff check --fix
-All checks passed!
-uv run ty check
-Checking ------------------------------------------------------------ 2/2
-files
-All checks passed!
+# Run pre-commit hooks against all files
+uv run pre-commit run --all-files
+check for case conflicts.................................................Passed
+check for merge conflicts................................................Passed
+check toml...............................................................Passed
+check yaml...............................................................Passed
+check json...........................................(no files to check)Skipped
+pretty format json...................................(no files to check)Skipped
+fix end of files.........................................................Passed
+trim trailing whitespace.................................................Passed
+ruff (legacy alias)......................................................Passed
+ruff format..............................................................Passed
+ty.......................................................................Passed
+uv audit.................................................................Passed
 ```
 
 Test the code by issuing command `just test`:
@@ -92,6 +100,12 @@ Run the application entry point:
 
 ```sh
 > just run
+```
+
+You can pass arguments through to the console script by adding them after `just run`:
+
+```sh
+> just run --help
 ```
 
 Since the justfile starts with `set dotenv-load`, the environment variables defined in the `.env` file are loaded before
@@ -144,7 +158,7 @@ Run `just` (or the default alias `just --list`) to see every command that ships 
 ```sh
 > just
 Available recipes:
-    run
+    run *args
 
     [docs]
     docs *args
@@ -163,7 +177,7 @@ Available recipes:
 
 Each recipe is meant for a specific moment in your workflow:
 
-- `run`: Executes the `python-minimal-boilerplate` console script with `uv run`. Use this to exercise the main entry point locally once dependencies are synced.
+- `run`: Executes the `python-minimal-boilerplate` console script with `uv run` and forwards any extra arguments. Use this to exercise the main entry point locally once dependencies are synced.
 - `docs`: Builds documentation with zensical. Run after updating docstrings to regenerate documentation.
 - `clean`: Deletes build and cache artifacts (`.venv`, `.pytest_cache`, `.ruff_cache`, `.uv-cache`, `__pycache__`, `*.egg-info`). Reach for this if tooling behaves strangely or you want a fresh workspace before packaging or committing.
 - `install`: Runs `uv sync --dev`, regenerates `pylock.toml`, and installs the pre-commit hooks. Use after cloning or when dependencies change.
@@ -171,4 +185,4 @@ Each recipe is meant for a specific moment in your workflow:
 - `test`: Invokes `uv run -m pytest -q`. Run it before pushing or whenever you change behavior covered by the test suite.
 - `lint`: Runs Ruff with `--fix` so formatting and autofixable lint issues are corrected. Helpful during development to keep style consistent.
 - `typing`: Performs type checking with Ty. Use it when changing interfaces or touching typed modules.
-- `check`: Convenience wrapper that combines `lint` (without formatting churn beyond Ruff fixes) and `typing`. Ideal for pre-commit validation or CI parity.
+- `check`: Runs the configured pre-commit hooks against all files. Ideal for pre-commit validation or CI parity.

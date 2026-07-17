@@ -30,6 +30,9 @@ target-version = "py314"
 line-length = 120
 fix = true
 
+[tool.uv]
+exclude-newer = "7 days"
+
 # Enforce docstrings to generate documenation from
 
 [tool.ruff.lint]
