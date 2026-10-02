@@ -7,7 +7,7 @@ Modern minimal boilerplate for a Python project with following developer depende
   - linting: `ruff`,
   - type checking: `ty`
 - testing: `pytest`, and
-- [documentation](https://github.com/cast42/zensical): `zensical`.
+- [documentation](https://zensical.org/): `zensical`.
 
 It uses command runner [`just`](https://github.com/casey/just) as a handy way to save and run project-specific commands.
 Logging is optionally with [Pydantic Logfire](https://pydantic.dev/logfire) as an example, but you can easily switch to your own favorite logger.
@@ -145,11 +145,36 @@ Generate the static documentation with zensical:
 just docs
 ```
 
-The rendered site is written to the `site/` directory.
+The rendered site is written to the `site/` directory. Builds fail on warnings,
+including broken internal links and anchors. After upgrading Zensical, clear
+its build cache with `just docs --clean`.
+
+Preview the site with automatic reload:
+
+```sh
+just docs-serve
+```
+
+Open `http://localhost:8000` in your browser. Before publishing, set `site_url`
+in `zensical.toml` to the deployment URL. Enable `navigation.instant` only after
+setting that URL, as required by [Zensical](https://zensical.org/docs/setup/navigation/#instant-navigation).
 
 ### View documentation for the package
 
-After running `just docs`, view the generated documentation. Zensical extracts docstrings and type information directly from your Python source files, keeping the documentation aligned with the implementation in `src/python_minimal_boilerplate/`.
+Zensical's built-in `api-autonav` support discovers modules in
+`src/python_minimal_boilerplate/` and adds generated pages to the API Reference
+navigation section. Update the `modules` and handler `paths` settings in
+`zensical.toml` if you rename or move the package.
+
+The `mkdocstrings-python` handler renders signatures, docstrings, and source
+listings. Keep that dependency: Zensical replaces the MkDocs plugin integration,
+but still uses the Python handler. MkDocs remains an indirect dependency of
+mkdocstrings. See [Zensical's compatibility guide](https://zensical.org/docs/compatibility/mkdocs/plugins/).
+
+Dependency resolution uses a seven-day cooldown by default. The latest release
+update explicitly exempts Ruff, Zensical, and `uv_build` through
+`tool.uv.exclude-newer-package` in `pyproject.toml`. Remove those exceptions to
+restore the cooldown for all packages once the selected releases are old enough.
 
 ## Just recipes
 
@@ -162,6 +187,7 @@ Available recipes:
 
     [docs]
     docs *args
+    docs-serve *args
 
     [lifecycle]
     clean        # Remove temporary files
@@ -178,7 +204,8 @@ Available recipes:
 Each recipe is meant for a specific moment in your workflow:
 
 - `run`: Executes the `python-minimal-boilerplate` console script with `uv run` and forwards any extra arguments. Use this to exercise the main entry point locally once dependencies are synced.
-- `docs`: Builds documentation with zensical. Run after updating docstrings to regenerate documentation.
+- `docs`: Builds documentation with Zensical in strict mode. Run after updating docstrings or documentation.
+- `docs-serve`: Previews the documentation locally with automatic reload.
 - `clean`: Deletes build and cache artifacts (`.venv`, `.pytest_cache`, `.ruff_cache`, `.uv-cache`, `__pycache__`, `*.egg-info`). Reach for this if tooling behaves strangely or you want a fresh workspace before packaging or committing.
 - `install`: Runs `uv sync --dev`, regenerates `pylock.toml`, and installs the pre-commit hooks. Use after cloning or when dependencies change.
 - `update`: Runs `uv lock --upgrade` to refresh `uv.lock` to the latest allowed versions and re-exports `pylock.toml`. Follow up with `just install`, `just check`, and `just test` to confirm upgrades are safe.

@@ -25,7 +25,11 @@ check *args:
 
 [group('docs')]
 docs *args:
-    uv run zensical build {{args}}
+    uv run zensical build --strict {{args}}
+
+[group('docs')]
+docs-serve *args:
+    uv run zensical serve {{args}}
 
 run *args:
     uv run python-minimal-boilerplate {{args}}

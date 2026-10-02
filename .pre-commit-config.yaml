@@ -15,15 +15,15 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.14.10"
+    rev: "v0.16.10"
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--exit-non-zero-on-fix]
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/ty-pre-commit
     # ty version.
-    rev: v0.0.56
+    rev: v0.0.84
     hooks:
       # Run the type checker.
       - id: ty

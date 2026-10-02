@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "logfire>=4.16.0",
+    "logfire>=5.1.1",
 ]
 
 [project.scripts]
@@ -13,16 +13,16 @@ python-minimal-boilerplate = "python_minimal_boilerplate.cli:main"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.14.10",
-    "ty>=0.0.12",
-    "pre-commit>=4.5.1",
-    "zensical>=0.0.19",
-    "pytest>=9.0.2",
-    "mkdocstrings-python>=2.0.1",
+    "ruff>=0.16.10",
+    "ty>=0.0.84",
+    "pre-commit>=4.6.2",
+    "zensical>=0.0.67",
+    "pytest>=9.1.1",
+    "mkdocstrings-python>=2.0.9",
 ]
 
 [build-system]
-requires = ["uv_build>=0.11.5,<0.12.0"]
+requires = ["uv_build>=0.12.22,<0.13.0"]
 build-backend = "uv_build"
 
 [tool.ruff]
@@ -32,8 +32,10 @@ fix = true
 
 [tool.uv]
 exclude-newer = "7 days"
+# Allow the explicitly requested latest releases while retaining the default cooldown.
+exclude-newer-package = { ruff = "0 days", zensical = "0 days", uv-build = "0 days" }
 
-# Enforce docstrings to generate documenation from
+# Enforce docstrings for generated documentation.
 
 [tool.ruff.lint]
 select = ["D", "E4", "E7", "E9", "F"]

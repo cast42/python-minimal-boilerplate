@@ -3,16 +3,20 @@ site_name = "python-minimal-boilerplate"
 site_description = "Modern minimal boilerplate for a Python project"
 site_author = "Your Name"
 copyright = "Copyright &copy; 2026 The authors"
+nav = [{ "Home" = "index.md" }]
 
 [project.theme]
 language = "en"
 features = [
     "content.code.copy",
     "navigation.footer",
-    "navigation.instant",
     "navigation.top",
     "search.highlight",
 ]
+
+# Zensical discovers modules and adds reference pages without an extra MkDocs plugin.
+[project.plugins.api-autonav]
+modules = ["src/python_minimal_boilerplate"]
 
 [project.plugins.mkdocstrings.handlers.python]
 inventories = ["https://docs.python.org/3/objects.inv"]
@@ -21,7 +25,9 @@ paths = ["src"]
 [project.plugins.mkdocstrings.handlers.python.options]
 docstring_style = "google"
 inherited_members = true
-show_source = false
+show_root_heading = true
+show_signature_annotations = true
+show_source = true
 
 [[project.theme.palette]]
 scheme = "default"
